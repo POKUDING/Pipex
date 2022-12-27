@@ -6,7 +6,7 @@
 /*   By: junhyupa <junhyupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 21:56:10 by junhyupa          #+#    #+#             */
-/*   Updated: 2022/12/25 02:48:15 by junhyupa         ###   ########.fr       */
+/*   Updated: 2022/12/27 16:25:30 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 
 void	error_control(char *msg)
 {
-	write(2, msg, ft_strlen(msg));
 	if (errno > 0)
-		write(2, strerror(errno), ft_strlen(strerror(errno)));
-	exit(EXIT_FAILURE);
+	{
+		perror(msg);
+		exit(errno);
+	}
+	else
+		write(2, msg, ft_strlen(msg));
+	exit(1);
 }
 
 void	free_box(char **box)
@@ -30,42 +34,45 @@ void	free_box(char **box)
 	free(box);
 }
 
-char	*find_path(char *cmd, char **envp)
+
+char	**ft_cutstr(char *s)
 {
 	int		i;
-	char	**paths;
-	char	*rtn;
+	char	**rtn;
 
 	i = 0;
-	while (ft_strncmp("PATH=", envp[i++], 5))
-		;
-	paths = ft_split(&envp[i - 1][5], ':');
-	i = 0;
-	while (paths[i])
+	rtn = (char **)malloc(sizeof(char *) * 3);
+	if (!rtn)
+		return (NULL);
+	rtn[2] = NULL;
+	while (s[i] && s[i] != ' ')
+		i++;
+	rtn[0] = ft_strndup(s, i);
+	if (!s[i] || !s[i + 1])
 	{
-		rtn = ft_strjoin(paths[i++], cmd);
-		if (access(rtn, F_OK) == 0)
-		{
-			free(cmd);
-			free_box(paths);
-			return (rtn);
-		}
-		free(rtn);
+		rtn[1] = NULL;
+		return (rtn);
 	}
-	free_box(paths);
-	free(cmd);
-	return (NULL);
+	i++;
+	rtn[1] = ft_strndup(s + i, ft_strlen(s + i));
+	return (rtn);
 }
 
-void	executer(char *cmd, char **envp)
+char	*ft_strndup(char *s, int n)
 {
-	char	**argv;
-	char	*path;
+	char	*rtn;
+	int		i;
 
-	argv = ft_split(cmd, ' ');
-	path = find_path(ft_strjoin("/", argv[0]), envp);
-	if (!path)
-		error_control("cmd error check cmd\n");
-	if (execve(path, argv, envp) == -1)
-		error_control("execve_failed\n");
+	rtn = (char *)malloc(sizeof(char) * (n + 1));
+	if (!rtn)
+		return (NULL);
+	i = 0;
+	while (s[i] && i < n)
+	{
+		rtn[i] = s[i];
+		i++;
+	}
+	while (i <= n)
+		rtn[i++] = 0;
+	return (rtn);
 }

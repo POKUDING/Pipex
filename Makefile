@@ -6,7 +6,7 @@
 #    By: junhyupa <junhyupa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/25 01:30:00 by junhyupa          #+#    #+#              #
-#    Updated: 2022/12/25 01:42:50 by junhyupa         ###   ########.fr        #
+#    Updated: 2022/12/27 00:22:00 by junhyupa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ INCLUDE := ./pipex.h
 LIBFT := ./libft/libft.a
 LIBFT_DIR := ./libft/
 
-SRC := pipex.c util.c
+SRC := pipex.c util.c excuter.c
 
 SRCS := $(addprefix ./srcs/,$(SRC))
 
