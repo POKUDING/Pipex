@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyupa <junhyupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 20:48:38 by junhyupa          #+#    #+#             */
-/*   Updated: 2022/12/29 14:23:05 by junhyupa         ###   ########.fr       */
+/*   Updated: 2022/12/29 15:05:08 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 //del;
 void	print_args(char **argv);
 
-char	**build_cmd_box(char **box ,int n);
+char	**build_cmd_box(char **box ,char *s);
 char	*erase_quote(char *s, char c);
-char	**parse_quote(char **argv);
+char	**parse_quote(char *cmd);
 
 char	*ft_strndup(char *s, int n);
 char	*find_path(char *cmd, char **envp);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyupa <junhyupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 15:05:01 by junhyupa          #+#    #+#             */
-/*   Updated: 2022/12/29 14:22:57 by junhyupa         ###   ########.fr       */
+/*   Updated: 2022/12/29 16:29:50 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-char	**build_cmd_box(char **box ,int n)
+char	**build_cmd_box(char **box, char *s)
 {
 	int		i;
 	int		j;
@@ -20,73 +20,61 @@ char	**build_cmd_box(char **box ,int n)
 	char	**rtn;
 
 	i = 0;
-	while (box[i])
+	while (box && box[i])
 		i++;
 	rtn = (char **)malloc(sizeof(char *) * (i + 2));
 	j = -1;
 	k = 0;
-	while (++j < i - 1)
+	while (++j < i)
 		rtn[j] = ft_strdup(box[j]);
-	rtn[j] = ft_strndup(box[j], n);
-	rtn[j+1] = ft_strdup(box[j] + n + 1);
+	rtn[j] = s;
 	rtn[i + 1] = NULL;
 	free_box(box);
 	return (rtn);
 }
 
-char	*erase_quote(char *s, char c)
+char	*erase_quote(char *s)
 {
-	int		i;
-	int		j;
-	int		count_quote;
+	size_t	i;
+	char	flag;
 	char	*rtn;
+	char	*tmp;
 
-	i = -1;
-	count_quote = 0;
-	while (s[++i] && i < ft_strlen(s))
-	{
-		if (s[i] == c)
-			count_quote++;
-	}
-	rtn = (char *)malloc(sizeof(char) * (ft_strlen(s) - count_quote + 1));
-	if (!rtn)
-		return (NULL);
 	i = 0;
-	j = 0;
+	flag = 0;
 	while (s[i])
 	{
-		if (s[i] != c)
-			rtn[j++] = s[i++];
-		else
-			i++;
+		if (!flag && s[i] == '\'' || s[i] == '"')
+			flag = s[i];
+
 	}
-	free (s);
-	return (rtn);
 }
 
-char	**parse_quote(char **argv)
+char	**parse_quote(char *cmd)
 {
 	int		i;
 	int		j;
 	char	flag;
+	char	**rtn;
 
-	i = 1;
+	rtn = NULL;
+	i = 0;
 	flag = 0;
-	while(argv[i])
+	while (cmd[i])
 	{
+		while (cmd[i] == ' ')
+			i++;
 		j = 0;
-		while(argv[i][j] && (flag || argv[i][j] != ' '))
+		while (cmd[i + j] && (flag || cmd[i + j] != ' '))
 		{
-			if (!flag && argv[i][j] == '"' || argv[i][j] == '\'')
-				flag = j;
-			else if (flag && flag == argv[i][j])
+			if (!flag && (cmd[i + j] == '"' || cmd[i + j] == '\''))
+				flag = cmd[i + j];
+			else if (flag && (cmd[i + j] == flag))
 				flag = 0;
-			else if (!flag && argv[i][j] == ' ')
-				break;
 			j++;
 		}
-		argv = build_cmd_box(argv , j);
-		i++;
+		rtn = build_cmd_box(rtn, ft_strndup(&cmd[i], j));
+		i = i + j;
 	}
-	return (argv);
+	return (rtn);
 }

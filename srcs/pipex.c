@@ -6,7 +6,7 @@
 /*   By: junhyupa <junhyupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 20:48:17 by junhyupa          #+#    #+#             */
-/*   Updated: 2022/12/27 15:44:22 by junhyupa         ###   ########.fr       */
+/*   Updated: 2022/12/29 15:25:29 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	print_args(char **argv)
 		i++;
 	}
 }
-
-
 
 void	child_process(char **argv, char **envp, int *fd)
 {

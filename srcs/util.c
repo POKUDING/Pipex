@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyupa <junhyupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 21:56:10 by junhyupa          #+#    #+#             */
-/*   Updated: 2022/12/29 14:23:00 by junhyupa         ###   ########.fr       */
+/*   Updated: 2022/12/29 15:12:59 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	free_box(char **box)
 	int	i;
 
 	i = 0;
-	while (box[i])
+	while (box && box[i])
 		free(box[i++]);
 	free(box);
 }

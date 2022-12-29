@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyupa <junhyupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 21:41:27 by junhyupa          #+#    #+#             */
-/*   Updated: 2022/12/29 14:22:53 by junhyupa         ###   ########.fr       */
+/*   Updated: 2022/12/29 16:22:18 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,27 @@
 // 	}
 // }
 
-int	main(int argc, char**argv, char** envp)
+// int	main(int argc, char**argv, char** envp)
+// {
+// 	int	i;
+// 	char **my_argv;
+
+// 	my_argv = parse_quote(argv[1]);
+// 	i = 0;
+// 	printf ("%s\n",argv[1]);
+// 	while (my_argv[i])
+// 	{
+// 		printf("argc : %d, argv : %s\n", i, my_argv[i]);
+// 		i++;
+// 	}
+// }
+
+int main(int argc, char **argv)
 {
 	int	i;
-	char **my_argv;
 
-	my_argv = parse_quote(ft_cutstr(argv[1]));
 	i = 0;
-	while (my_argv[i])
-	{
-		printf("argc : %d, argv : %s\n", i, my_argv[i]);
-		i++;
-	}
-	//execve(argv[1], &argv[1], envp);
+	while(argv[i])
+		printf("%s\n",argv[i++]);
+	return (0);
 }
