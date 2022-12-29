@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyupa <junhyupa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 15:05:01 by junhyupa          #+#    #+#             */
-/*   Updated: 2022/12/27 16:25:22 by junhyupa         ###   ########.fr       */
+/*   Updated: 2022/12/29 14:22:57 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char	**build_cmd_box(char **box ,int n)
 	rtn[j] = ft_strndup(box[j], n);
 	rtn[j+1] = ft_strdup(box[j] + n + 1);
 	rtn[i + 1] = NULL;
+	free_box(box);
 	return (rtn);
 }
 
@@ -63,24 +64,29 @@ char	*erase_quote(char *s, char c)
 	return (rtn);
 }
 
-char	**parse_argv(char *cmd)
+char	**parse_quote(char **argv)
 {
-	char **rtn;
-	int	i;
-	int	j;
-	int	flag;
+	int		i;
+	int		j;
+	char	flag;
 
 	i = 1;
 	flag = 0;
-	rtn = ft_cutstr(cmd);
-	while(rtn[i])
+	while(argv[i])
 	{
 		j = 0;
-		while(rtn[i][j] && (flag || rtn[i][j] != ' ')
+		while(argv[i][j] && (flag || argv[i][j] != ' '))
 		{
-			if (j == '"' || j == "'")
-				flag = !flag;
+			if (!flag && argv[i][j] == '"' || argv[i][j] == '\'')
+				flag = j;
+			else if (flag && flag == argv[i][j])
+				flag = 0;
+			else if (!flag && argv[i][j] == ' ')
+				break;
 			j++;
 		}
+		argv = build_cmd_box(argv , j);
+		i++;
 	}
+	return (argv);
 }
