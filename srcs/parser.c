@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyupa <junhyupa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 15:05:01 by junhyupa          #+#    #+#             */
-/*   Updated: 2022/12/29 16:29:50 by junhyupa         ###   ########.fr       */
+/*   Updated: 2022/12/29 19:52:48 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ char	*erase_quote(char *s)
 	{
 		if (!flag && s[i] == '\'' || s[i] == '"')
 			flag = s[i];
-
 	}
 }
 
@@ -59,18 +58,16 @@ char	**parse_quote(char *cmd)
 
 	rtn = NULL;
 	i = 0;
-	flag = 0;
 	while (cmd[i])
 	{
 		while (cmd[i] == ' ')
 			i++;
 		j = 0;
-		while (cmd[i + j] && (flag || cmd[i + j] != ' '))
+		flag = 0;
+		while (cmd[i + j] && (flag || cmd[i + j] != ' ') && cmd[i + j] != flag)
 		{
 			if (!flag && (cmd[i + j] == '"' || cmd[i + j] == '\''))
 				flag = cmd[i + j];
-			else if (flag && (cmd[i + j] == flag))
-				flag = 0;
 			j++;
 		}
 		rtn = build_cmd_box(rtn, ft_strndup(&cmd[i], j));
