@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyupa <junhyupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 15:05:01 by junhyupa          #+#    #+#             */
-/*   Updated: 2022/12/29 19:52:48 by junhyupa         ###   ########.fr       */
+/*   Updated: 2022/12/30 16:35:28 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,31 @@ char	**build_cmd_box(char **box, char *s)
 {
 	int		i;
 	int		j;
-	int		k;
 	char	**rtn;
 
 	i = 0;
-	while (box && box[i])
-		i++;
-	rtn = (char **)malloc(sizeof(char *) * (i + 2));
-	j = -1;
-	k = 0;
-	while (++j < i)
-		rtn[j] = ft_strdup(box[j]);
-	rtn[j] = s;
-	rtn[i + 1] = NULL;
-	free_box(box);
-	return (rtn);
+	if (s[0] == '"' || s[0] == '\'')
+		//quote 없애기
+	if (s[i] == ' ')
+	{
+		//새라인 만들기
+	}
+	else
+	{
+		//라인 이어 붙이기
+	}
 }
 
-char	*erase_quote(char *s)
+char	*join_argv(char *argv, char *new)
 {
 	size_t	i;
-	char	flag;
-	char	*rtn;
 	char	*tmp;
+	char	*rtn;
 
-	i = 0;
-	flag = 0;
-	while (s[i])
+	if (new[0] == "'")
+	if (argv == NULL)
 	{
-		if (!flag && s[i] == '\'' || s[i] == '"')
-			flag = s[i];
+		rtn = ft_strtrim(new, )
 	}
 }
 
@@ -54,22 +49,21 @@ char	**parse_quote(char *cmd)
 	int		i;
 	int		j;
 	char	flag;
+	char	*tmp;
 	char	**rtn;
 
 	rtn = NULL;
 	i = 0;
 	while (cmd[i])
 	{
-		while (cmd[i] == ' ')
-			i++;
 		j = 0;
-		flag = 0;
-		while (cmd[i + j] && (flag || cmd[i + j] != ' ') && cmd[i + j] != flag)
-		{
-			if (!flag && (cmd[i + j] == '"' || cmd[i + j] == '\''))
-				flag = cmd[i + j];
+		while(cmd[i + j] == ' ')
 			j++;
-		}
+		flag = 0;
+		if ((cmd[i + j] == '"' || cmd[i + j] == '\''))
+			flag = cmd[i + j];
+		while (cmd[i + j] && (flag || cmd[i + j] != ' ') && cmd[i + j] != flag)
+			j++;
 		rtn = build_cmd_box(rtn, ft_strndup(&cmd[i], j));
 		i = i + j;
 	}
