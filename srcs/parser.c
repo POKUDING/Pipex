@@ -6,7 +6,7 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 15:05:01 by junhyupa          #+#    #+#             */
-/*   Updated: 2022/12/31 17:14:56 by junhyupa         ###   ########.fr       */
+/*   Updated: 2022/12/31 17:26:29 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ char	**build_argv_box(char **box, char *s)
 	else
 	{
 		i = ft_strlen(s) - 1;
-		//라인 이어 붙이기
 		if ((s[0] == '"' || s[0] == '\'') && s[0] == s[i])
 		{
 			tmp = ft_substr(s, 1, i - 1);
@@ -50,7 +49,10 @@ char	**cpy_argv_box(char **box, char* s)
 	rtn[i + 1] = NULL;
 	while (*s == ' ')
 		s++;
-	rtn[i] = ft_strdup(s);
+	if ((*s == '"' || *s == '\'') && *s == s[ft_strlen(s) - 1])
+		rtn[i] = ft_substr(s, 1, ft_strlen(s) - 2);
+	else
+		rtn[i] = ft_strdup(s);
 	while (--i >= 0)
 		rtn[i] = box[i];
 	if (box)
