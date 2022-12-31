@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: junhyupa <junhyupa@student.42.fr>          +#+  +:+       +#+         #
+#    By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/25 01:30:00 by junhyupa          #+#    #+#              #
-#    Updated: 2022/12/29 15:27:00 by junhyupa         ###   ########.fr        #
+#    Updated: 2022/12/30 19:43:06 by junhyupa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := pipex
 
-CC := CC
+CC := cc
 CFLAGS := -Wall -Werror -Wextra -g -fsanitize=address
 
 RM := rm -f

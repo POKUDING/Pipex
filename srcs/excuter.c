@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   excuter.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyupa <junhyupa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 00:11:11 by junhyupa          #+#    #+#             */
-/*   Updated: 2022/12/29 15:26:28 by junhyupa         ###   ########.fr       */
+/*   Updated: 2022/12/30 19:43:52 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	executer(char *cmd, char **envp)
 	char	**argv;
 	char	*path;
 
-	argv = parse_quote(cmd);
+	argv = parse_argv(cmd);
 	path = find_path(ft_strjoin("/", argv[0]), envp);
 	if (!path)
 		error_control("command not found");

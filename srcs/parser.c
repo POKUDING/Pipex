@@ -3,69 +3,97 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyupa <junhyupa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 15:05:01 by junhyupa          #+#    #+#             */
-/*   Updated: 2022/12/30 16:35:28 by junhyupa         ###   ########.fr       */
+/*   Updated: 2022/12/31 17:14:56 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-char	**build_cmd_box(char **box, char *s)
+char	**build_argv_box(char **box, char *s)
 {
 	int		i;
-	int		j;
+	char	*tmp;
 	char	**rtn;
 
 	i = 0;
-	if (s[0] == '"' || s[0] == '\'')
-		//quote 없애기
-	if (s[i] == ' ')
-	{
-		//새라인 만들기
-	}
+	rtn = NULL;
+	if (!box || s[i] == ' ')
+		rtn = cpy_argv_box(box, s);
 	else
 	{
+		i = ft_strlen(s) - 1;
 		//라인 이어 붙이기
+		if ((s[0] == '"' || s[0] == '\'') && s[0] == s[i])
+		{
+			tmp = ft_substr(s, 1, i - 1);
+			free(s);
+			s = tmp;
+		}
+		rtn = join_argv(box, s);
 	}
+	free(s);
+	return (rtn);
 }
 
-char	*join_argv(char *argv, char *new)
+char	**cpy_argv_box(char **box, char* s)
+{
+	int		i;
+	char	**rtn;
+
+	i = 0;
+	while(box && box[i])
+		i++;
+	rtn = (char **)malloc(sizeof(char *) * (i + 2));
+	rtn[i + 1] = NULL;
+	while (*s == ' ')
+		s++;
+	rtn[i] = ft_strdup(s);
+	while (--i >= 0)
+		rtn[i] = box[i];
+	if (box)
+		free(box);
+	return (rtn);
+}
+
+char	**join_argv(char **argv, char *new)
 {
 	size_t	i;
 	char	*tmp;
-	char	*rtn;
 
-	if (new[0] == "'")
-	if (argv == NULL)
-	{
-		rtn = ft_strtrim(new, )
-	}
+	i = 0;
+	while (argv && argv[i])
+		i++;
+	tmp = ft_strjoin(argv[i - 1], new);
+	free(argv[i - 1]);
+	argv[i - 1] = tmp;
+	return (argv);
 }
 
-char	**parse_quote(char *cmd)
+char	**parse_argv(char *cmd)
 {
 	int		i;
-	int		j;
 	char	flag;
-	char	*tmp;
 	char	**rtn;
 
 	rtn = NULL;
-	i = 0;
-	while (cmd[i])
+	while (cmd && *cmd)
 	{
-		j = 0;
-		while(cmd[i + j] == ' ')
-			j++;
+		i = 0;
+		while(cmd[i] == ' ')
+			i++;
 		flag = 0;
-		if ((cmd[i + j] == '"' || cmd[i + j] == '\''))
-			flag = cmd[i + j];
-		while (cmd[i + j] && (flag || cmd[i + j] != ' ') && cmd[i + j] != flag)
-			j++;
-		rtn = build_cmd_box(rtn, ft_strndup(&cmd[i], j));
-		i = i + j;
+		if ((cmd[i] == '"' || cmd[i] == '\''))
+			flag = cmd[i++];
+		while (cmd[i] && ((flag && flag != cmd[i]) || \
+			(cmd[i] != '\'' && cmd[i] != '"' && cmd[i] != ' ')))
+			i++;
+		if (flag && flag == cmd[i])
+			i++;
+		rtn = build_argv_box(rtn, ft_strndup(cmd, i));
+		cmd = cmd + i;
 	}
 	return (rtn);
 }
