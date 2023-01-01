@@ -6,7 +6,7 @@
 /*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 15:05:01 by junhyupa          #+#    #+#             */
-/*   Updated: 2022/12/31 17:26:29 by junhyupa         ###   ########.fr       */
+/*   Updated: 2022/12/31 17:48:37 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ char	**build_argv_box(char **box, char *s)
 	return (rtn);
 }
 
-char	**cpy_argv_box(char **box, char* s)
+char	**cpy_argv_box(char **box, char *s)
 {
 	int		i;
 	char	**rtn;
 
 	i = 0;
-	while(box && box[i])
+	while (box && box[i])
 		i++;
 	rtn = (char **)malloc(sizeof(char *) * (i + 2));
 	rtn[i + 1] = NULL;
@@ -84,7 +84,7 @@ char	**parse_argv(char *cmd)
 	while (cmd && *cmd)
 	{
 		i = 0;
-		while(cmd[i] == ' ')
+		while (cmd[i] == ' ')
 			i++;
 		flag = 0;
 		if ((cmd[i] == '"' || cmd[i] == '\''))
@@ -94,7 +94,7 @@ char	**parse_argv(char *cmd)
 			i++;
 		if (flag && flag == cmd[i])
 			i++;
-		rtn = build_argv_box(rtn, ft_strndup(cmd, i));
+		rtn = build_argv_box(rtn, ft_substr(cmd, 0, i));
 		cmd = cmd + i;
 	}
 	return (rtn);

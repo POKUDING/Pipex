@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyupa <junhyupa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 20:48:17 by junhyupa          #+#    #+#             */
-/*   Updated: 2022/12/29 15:25:29 by junhyupa         ###   ########.fr       */
+/*   Updated: 2022/12/31 17:46:03 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
 //del
-void	print_args(char **argv)
-{
-	int	i;
+// void	print_args(char **argv)
+// {
+// 	int	i;
 
-	i = 0;
-	while (argv[i])
-	{
-		write(1,argv[i],ft_strlen(argv[i]));
-		write(1,"\n",1);
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (argv[i])
+// 	{
+// 		write(1,argv[i],ft_strlen(argv[i]));
+// 		write(1,"\n",1);
+// 		i++;
+// 	}
+// }
 
 void	child_process(char **argv, char **envp, int *fd)
 {
