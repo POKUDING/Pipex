@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyupa <junhyupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 20:48:17 by junhyupa          #+#    #+#             */
-/*   Updated: 2022/12/31 17:46:03 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/01/04 16:39:14 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	child_process(char **argv, char **envp, int *fd)
 
 	infile_fd = open(argv[1], O_RDONLY, 0444);
 	if (infile_fd == -1)
-		error_control("pipex: input");
+		error_control("pipex: input: ", NULL, 2);
 	dup2(infile_fd, STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[0]);
@@ -45,7 +45,7 @@ void	parents_process(char **argv, char **envp, int *fd)
 
 	outfile_fd = open(argv[4], O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (outfile_fd == -1)
-		error_control("pipex: input");
+		error_control("pipex: input: ", NULL, 1);
 	dup2(outfile_fd, STDOUT_FILENO);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[1]);
@@ -58,11 +58,11 @@ int	main(int argc, char **argv, char **envp)
 	pid_t	pid;
 
 	if (!envp)
-		error_control("check envp\n");
+		error_control("check envp\n", NULL, 1);
 	if (argc != 5)
-		error_control("check command\n");
+		error_control("check command\n", NULL, 1);
 	if (pipe(pipe_fd) == -1)
-		error_control("Pipe Error\n");
+		error_control("Pipe Error\n", NULL, 1);
 	pid = fork();
 	if (pid == 0)
 		child_process(argv, envp, pipe_fd);

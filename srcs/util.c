@@ -3,25 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyupa <junhyupa@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyupa <junhyupa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 21:56:10 by junhyupa          #+#    #+#             */
-/*   Updated: 2022/12/31 17:46:20 by junhyupa         ###   ########.fr       */
+/*   Updated: 2023/01/04 16:43:07 by junhyupa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-void	error_control(char *msg)
+void	error_control(char *msg, char *msg2, int n)
 {
-	if (errno > 0)
-	{
-		perror(msg);
-		exit(errno);
-	}
+	char	*output;
+
+	if (msg2)
+		output = ft_strjoin(msg, msg2);
 	else
-		write(2, msg, ft_strlen(msg));
-	exit(1);
+		output = ft_strjoin(msg, strerror(n));
+	write(2, output, ft_strlen(output));
+	write(2, "\n", 1);
+	exit(n);
 }
 
 void	free_box(char **box)
